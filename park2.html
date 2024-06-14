@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 45%;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        #Sel {
+            width: 75px;
+        }
+
+        #nonSel {
+            width: 150px;
+        }
+        
+        #show_total {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            고객 성명: <input type="text" id="inputName" >
+        </div>
+        <div class="input-group">
+            <button onclick="ShowTotal()">합계</button>
+        </div>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th style="width:40px;">No</th>
+                <th>구분</th>
+                <th colspan="2">어린이</th>
+                <th colspan="2">어른</th>
+                <th>비고</th>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td id="nonSel">입장권</td>
+                <td id="Sel">7,000</td>
+                <td id="Sel">
+                    <select id="childEnter">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td id="Sel">10,000</td>
+                <td id="Sel">
+                    <select id="adultEnter">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td id="nonSel">입장</td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>BIG3</td>
+                <td>12,000</td>
+                <td>
+                    <select id="childBig3">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>16,000</td>
+                <td>
+                    <select id="adultBig3">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>입장+놀이3종</td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td>자유이용권</td>
+                <td>21,000</td>
+                <td>
+                    <select id="childFree">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>26,000</td>
+                <td>
+                    <select id="adultFree">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>입장+놀이자유</td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td>연간이용권</td>
+                <td>70,000</td>
+                <td>
+                    <select id="childYear">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>90,000</td>
+                <td>
+                    <select id="adultYear">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>입장+놀이자유</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="show_total"></div>
+
+    <script>
+        function ShowTotal() {
+            let today = new Date();
+
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let date = today.getDate();
+            let hours = today.getHours();
+            let minutes = today.getMinutes();
+
+            let inputName = document.getElementById("inputName").value;
+        
+            let childEnter = 7000 * Number(document.getElementById("childEnter").value);
+            let childBig3 = 12000 * Number(document.getElementById("childBig3").value);
+            let childFree = 21000 * Number(document.getElementById("childFree").value);
+            let childYear = 70000 * Number(document.getElementById("childYear").value);
+
+            let adultEnter = 10000 * Number(document.getElementById("adultEnter").value);
+            let adultBig3 = 16000 * Number(document.getElementById("adultBig3").value);
+            let adultFree = 26000 * Number(document.getElementById("adultFree").value);
+            let adultYear = 90000 * Number(document.getElementById("adultYear").value);
+
+            let childSum = childEnter + childBig3 + childFree + childYear;
+            let adultSum = adultEnter + adultBig3 + adultFree + adultYear;
+
+            let sum = childSum + adultSum;
+
+            const formattedTotal = `${year}년 ${month}월 ${date}일 ${hours}:${minutes}분<br>
+                                    ${inputName} 고객님 감사합니다.<br>
+                                    어린이 ${childSum}원<br>
+                                    어른 ${adultSum}원<br>
+                                    합계 ${sum}입니다.`;
+            document.getElementById('show_total').innerHTML = `${formattedTotal}`;
+        }
+    </script>
+</body>
+</html>
